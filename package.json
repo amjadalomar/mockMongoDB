@@ -1,0 +1,24 @@
+{
+  "name": "mockmongodb",
+  "version": "1.0.0",
+  "description": "Learning how to use Mongo :)",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amjadalomar/mockMongoDB.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/amjadalomar/mockMongoDB/issues"
+  },
+  "homepage": "https://github.com/amjadalomar/mockMongoDB#readme",
+  "dependencies": {
+    "mongodb": "^4.1.4",
+    "spoonacular_api": "^1.0.0"
+  }
+}

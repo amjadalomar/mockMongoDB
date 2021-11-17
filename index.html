@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mongo Testing hehehehe</title>
+
+  <!-- Web Components -->
+  <script src="assets/components/RecipeCard.js" type="module"></script>
+  <script src="assets/components/RecipeExpand.js" type="module"></script>
+
+  <!-- Router -->
+  <script src="assets/scripts/router.js" type="module"></script>
+
+  <!-- Main Stylesheet & Scripts -->
+  <link rel="stylesheet" href="assets/styles/main.css" />
+  <script src="assets/scripts/main.js" type="module"></script>
+
+  <!-- newly added -->
+  <script src="objectCreate.js" type="module"></script>
+</head>
+
+<body>
+  <main>
+
+
+    <h1>Test Test</h1>
+
+    <label for="search">Search</label>
+    <input type="text" id="search">
+    <button class="button" id="button">Magnifying Glass</button>
+
+
+    <section class="section--recipe-cards shown">
+      <div class="recipe-cards--wrapper">
+        <!-- Recipes Added Here -->
+      </div>
+      <div class="button--wrapper">
+        <img src="assets/images/icons/arrow-down.png" alt="Arrow down" />
+        <button>Show more</button>
+      </div>
+      <div class="button--horizontal-line"></div>
+    </section>
+    <section class="section--recipe-expand">
+      <recipe-expand></recipe-expand>
+    </section>
+  </main>
+</body>
+
+</html>
