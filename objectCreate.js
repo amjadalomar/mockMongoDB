@@ -5,7 +5,6 @@
 module.exports = { createRecipeObject };
 
 const MongoClient = require('mongodb').MongoClient;
-
 const url = "mongodb://localhost:27017/";
 
 function createRecipeObject(data)
@@ -34,6 +33,7 @@ function createRecipeObject(data)
 
 }
 
+<<<<<<< HEAD
 //TODO: make this work after the fetch happens
 function addToDB (recipe)
 {
@@ -64,6 +64,8 @@ function addToDB (recipe)
   });
 }
 
+=======
+>>>>>>> ec9d89285a97de878ec7701c1fdcedc560c13d7d
 /**
  * Recursively search for a key nested somewhere inside an object
  * @param {Object} object the object with which you'd like to search
