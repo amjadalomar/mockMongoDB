@@ -3,7 +3,7 @@ const MongoClient = require('mongodb').MongoClient;
 const url = "mongodb://localhost:27017/";
 
 //Create/Insert into DB
-function insert(recipe)
+function createRecipe(recipe)
 {
   MongoClient.connect(url, function(err, db) {
     if (err) throw err;
@@ -18,19 +18,19 @@ function insert(recipe)
 }
 
 //Read/View recipe from DB
-function read()
+function readRecipe()
 {
 
 }
 
 //Update recipe from DB
-function update()
+function updateRecipe()
 {
 
 }
 
 //Delete Recipe from DB
-function remove()
+function deleteRecipe()
 {
 
 }
