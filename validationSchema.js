@@ -9,7 +9,7 @@ db.createCollection("recipes", {
    validator: {
       $jsonSchema: {
         bsonType: "object",
-        required: [ "title", "image", "author", "servings", "cookingTime", "ingredients", "instructions" ],
+        required: [ "title", "image", "author", "servings", "cookingTime", "ingredients", "instructions", "tags" ],
         properties: {
             name: {
                 bsonType: "string",
@@ -43,6 +43,16 @@ db.createCollection("recipes", {
                 }
             },
             instructions: {
+                bsonType: ["array"],
+                minItems: 1,
+                uniqueItems: true,
+                items: {
+                    bsonType: "string",
+                    description: "each array index must be a string and is required",
+
+                }
+            },
+            tags: {
                 bsonType: ["array"],
                 minItems: 1,
                 uniqueItems: true,
