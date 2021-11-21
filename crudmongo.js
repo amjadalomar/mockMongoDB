@@ -2,57 +2,12 @@ const { MongoClient } = require('mongodb');
 //this is going to have to be a more formal user and the password needs to be hidden maybe using process.env
 const uri = "mongodb+srv://first-user:2kS2Dr0nQTrLPkBW@mockdb.kbrxs.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 const client = new MongoClient(uri);
-//this will be replaced with recipeDB and either 'users' or 'recipes'
+//this will be replaced with 'recipeDB'     and either 'users' or 'recipes'
 const database = client.db("sample_airbnb").collection("listingsAndReviews")
 
 async function main() {
-
-    
-
-
     try{
         await client.connect();
-
-        //await deleteManyListings(client, new Date("2019-02-15"));
-
-        //await deleteListing(client, "cozy cottage");
-
-        //await updateManyListings(client);
-
-        //await upsertListingByName(client, "cozy cottage", {bedrooms: 3, beds: 2, bathrooms: 40, name: "cozy cottage"});
-
-        //await updateListingByName(client, "lovely loft", {bedrooms: 60, beds: 90});
-
-        //await findManyListings(client, {minNumBeds: 3, minNumBaths: 3, maxNumResults: 5});
-
-        //await findOneListingByName(client, "lovely loft");
-        
-        // await createMultipleListings(client, [
-        // {
-        //     name: "infifnifn",
-        //     bedrooms: 2,
-        //     bathrooms: 4,
-        //     summary: "oeeppepepepepe"
-        // },
-        // {
-        //     name: "hhotlelellele",
-        //     bedrooms: 110101,
-        //     bathrooms: 121
-        // },
-        // {
-        //     name: "doofus",
-        //     bedrooms: 3,
-        //     bathrooms: 2
-        // }]);
-
-        await createRecipe(client, {
-            name: "unlovely loft",
-            summary: "not charming loft in paris",
-            bedrooms: 10,
-            bathrooms: 10
-        });
-
-        //await listDatabases(client);
     }
     catch(e) {
         console.error(e);
@@ -62,48 +17,72 @@ async function main() {
     }
 }
 
-main().catch(console.error);
+//main().catch(console.error);
 
-//create method
-async function createRecipe(client, newRecipe) {
+//CREATE method
+async function createRecipe(newRecipe) {
 
-    //this needs to be the correct database and collections
+    try{
+        await client.connect();
+        //i think for this 
+        const result = await database.insertOne(newRecipe);
+        console.log(`new listing created with id: ${result.insertedId}`);
+    }
+    catch(e) {
+        console.error(e);
+    }
+    finally {
+        await client.close();
+    }
+    
 
-    //i think for this 
-    const result = await database.insertOne(newRecipe);
-
-    console.log(`new listing created with id: ${result.insertedId}`);
+    
 
 }
 
-//create many method
-async function createMultipleRecipes(client, newRecipes) {
+main().catch(console.error);
 
-    const result = await client.db("sample_airbnb").collection("listingsAndReviews").insertMany(newRecipes);
+//create many method
+async function createMultipleRecipes(newRecipes) {
+
+    const result = await database.insertMany(newRecipes);
 
     console.log(`${result.insertedCount} new listings created with the following id(s): `);
     console.log(result.insertedIds);
 
 }
 
-//example of find using name
-async function findOneRecipeByName(client, nameOfRecipe) {
-    const result = await client.db("sample_airbnb").collection("listingsAndReviews").findOne({name: nameOfRecipe});
+//READ recipe (find one recipe/view recipe)
+//this is used for when a recipe card is clicked and you are viewing the current recipe
+async function findRecipe(recipeId) {
 
-    if(result)
-    {
-        console.log(`found a listing in the collection with the name ${nameOfRecipe}`);
-        console.log(result);
+    try{
+        await client.connect();
+
+        const result = await database.findOne({_id: recipeId});
+
+        if(result)
+        {
+            console.log(`found a recipe in the collection`);
+            console.log(result);
+        }
+        else{
+            console.log(`No recipe found`);
+        }
     }
-    else{
-        console.log(`No listing found with name:  ${nameOfRecipe}`);
+    catch(e) {
+        console.error(e);
     }
+    finally {
+        await client.close();
+    }
+    
 }
 
-//find multiple with query criteria
-async function findManyRecipes(client, {minNumBeds = 0, minNumBaths = 0, maxNumResults = Number.MAX_SAFE_INTEGER} = {}) {
+//this is used more for search queries and filtering
+async function findManyRecipes({minNumBeds = 0, minNumBaths = 0, maxNumResults = Number.MAX_SAFE_INTEGER} = {}) {
 
-    const cursor = client.db("sample_airbnb").collection("listingsAndReviews").find({bedrooms: {$gte: minNumBeds}, bathrooms: {$gte: minNumBaths}}).sort({ last_review: -1}).limit(maxNumResults);
+    const cursor = database.find({bedrooms: {$gte: minNumBeds}, bathrooms: {$gte: minNumBaths}}).sort({ last_review: -1}).limit(maxNumResults);
 
     const results = await cursor.toArray();
 
@@ -111,22 +90,30 @@ async function findManyRecipes(client, {minNumBeds = 0, minNumBaths = 0, maxNumR
 
 }
 
-//update
-async function updateRecipeByName(client, nameOfRecipe, updatedRecipe) {
+//UPDATE recipe
+async function updateRecipe(recipeId, updatedRecipe) {
 
-    const result = await client.db("sample_airbnb").collection("listingsAndReviews").updateOne({name: nameOfRecipe}, {$set: updatedRecipe});
+    try{
+        await client.connect();
 
-    console.log(`${result.matchedCount} documents matched query criteria`);
-    console.log(`${result.modifiedCount} documents were updated`);
-    console.log(result);
+        const result = await database.updateOne({_id: recipeId}, {$set: updatedRecipe});
 
-
+        console.log(`${result.matchedCount} documents matched query criteria`);
+        console.log(`${result.modifiedCount} documents were updated`);
+        console.log(result);
+    }
+    catch(e) {
+        console.error(e);
+    }
+    finally {
+        await client.close();
+    }
 }
 
 //update/insert if not found
-async function upsertRecipeByName(client, nameOfRecipe, updatedRecipe) {
+async function upsertRecipeByName(nameOfRecipe, updatedRecipe) {
 
-    const result = await client.db("sample_airbnb").collection("listingsAndReviews").updateOne({name: nameOfRecipe}, {$set: updatedRecipe}, {upsert: true});
+    const result = await database.updateOne({name: nameOfRecipe}, {$set: updatedRecipe}, {upsert: true});
 
     console.log(`${result.matchedCount} documents matched criteria`);
 
@@ -140,34 +127,43 @@ async function upsertRecipeByName(client, nameOfRecipe, updatedRecipe) {
 }
 
 //updating many
-async function updateManyRecipes(client) {
+async function updateManyRecipes() {
 
-    const result = await client.db("sample_airbnb").collection("listingsAndReviews").updateMany({property_type: {$exists: false}}, {$set: {property_type: "Unknown"}});
+    const result = await database.updateMany({property_type: {$exists: false}}, {$set: {property_type: "Unknown"}});
 
     console.log(`${result.matchedCount} documents matched query criteria`);
     console.log(`${result.modifiedCount} documents were updated`);
 
 }
 
-//delete one document
-async function deleteRecipe(client, nameOfRecipe) {
+//DELETE recipe
+async function deleteRecipe(recipeId) {
 
-    const result = await client.db("sample_airbnb").collection("listingsAndReviews").deleteOne({name: nameOfRecipe});
+    try{
+        await client.connect();
 
-    console.log(`${result.deletedCount} documents were deleted`);
+        const result = await database.deleteOne({_id: recipeId});
 
+        console.log(`${result.deletedCount} documents were deleted`);
+    }
+    catch(e) {
+        console.error(e);
+    }
+    finally {
+        await client.close();
+    }
 }
 
 //delete many
-async function deleteManyRecipes(client, date) {
+async function deleteManyRecipes(date) {
 
-    const result = await client.db("sample_airbnb").collection("listingsAndReviews").deleteMany({"last_scraped": {$lt: date}});
+    const result = await database.deleteMany({"last_scraped": {$lt: date}});
 
     console.log(`${result.deletedCount} documentes were deleted`);
 
 }
 
-async function listDatabases(client) {
+async function listDatabases() {
     const databasesList = await client.db().admin().listDatabases();
 
     console.log(`Databases: `);
@@ -176,3 +172,5 @@ async function listDatabases(client) {
         console.log(`-${db.name}`);
     });
 }
+
+module.exports = { createRecipe, findRecipe, updateRecipe, deleteRecipe};

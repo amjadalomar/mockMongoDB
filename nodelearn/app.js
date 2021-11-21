@@ -1,26 +1,32 @@
 const http = require('http');
-const url = require('url');
 const fs = require('fs');
+const { parse } = require('querystring');
 
-const dt = require('./firstmodule');
-
-const hostname = '127.0.0.1';
-const port = 3000;
+const crud = require('../crudmongo.js');
 
 const server = http.createServer((req, res) => {
-  fs.readFile('demo.html', function(err, data) {
-    if (req.method == 'POST' && req.url == '/createRecipe') {
-      
+    if (req.method === 'POST') {
+        let body = '';
+      req.on('data', chunk => {
+          body += chunk.toString(); // convert Buffer to string
+      });
+      req.on('end', () => {
+          let recipe = parse(body);
+          console.log(recipe);
+          crud.createRecipe(recipe);
+          res.end('ok');
+      });
     }
-    res.writeHead(200, {'Content-Type': 'text/html'});
-    // var q = url.parse(req.url, true).query;
-    // var txt = q.recipe + " " + q.user;
-    res.write(data);
-    return res.end();
-  });
+    else {
+      fs.readFile('./nodelearn/demo.html', function(err, data) {
+        res.writeHead(200, {'Content-Type': 'text/html'});
+        res.write(data);
+        res.end();
+      });
+    }
 });
 
-
-server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
+server.listen(3000, '127.0.0.1', () => {
+  console.log(`Server running at http://127.0.0.1:3000/`);
 });
+
