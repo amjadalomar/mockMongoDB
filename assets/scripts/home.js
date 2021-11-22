@@ -12,7 +12,8 @@ function init() {
         '../assets/images/sample-recipes/quesa.jpg',
         '../assets/images/sample-recipes/ravioli.jpg',
         '../assets/images/sample-recipes/sushi.jpg',
-        '../assets/images/sample-recipes/sweet-rice.jpg'
+        '../assets/images/sample-recipes/sweet-rice.jpg',
+        '../assets/images/sample-recipes/Ice-Cream-Sundae.jpg'
     ]
     const recipeGrid = document.querySelector('.recipe-grid');
     const recipeElements = document.querySelectorAll('.recipe');
@@ -52,7 +53,8 @@ function init() {
 
 
             // Add given recipe
-            recipeElements[i].textContent = '\r\n' + recipes[pointer].substr(32, recipes[pointer].substr(22).length - 4).replace('-', ' ')+'\r\n\n';
+            recipeElements[i].textContent = '\r\n' +  recipes[pointer].slice(32, recipes[pointer].length - 4) + '\r\n\n';
+            //recipeElements[i].textContent = '\r\n' + recipes[pointer].substr(32, recipes[pointer].substr(22).length - 4).replace('-', ' ')+'\r\n\n';
             recipeElements[i].appendChild(recipe);
 
             // Update pointer
@@ -76,3 +78,8 @@ function init() {
         }
     });
 }
+
+const createButton = document.getElementById('createButton');
+    createButton.addEventListener('click', function () {
+        window.location('createRecipe.html');
+})

@@ -131,6 +131,25 @@ body {
 
 }
 
+.createPanel {
+  border: 2pt solid  black;
+  font-size: 12pt;
+  text-align: center;
+  display: block;  
+  margin-left: auto;  
+  margin-right: auto;  
+  height: 26vh;
+  width: 31em;
+  white-space: pre-line;
+}
+
+#createButton{
+  margin-top: 7vh;
+  width: 27%;
+  height: 50%;
+  font-size: xxx-large;
+}
+
 /* The navigation menu links
 .sidenav a {
   padding: 6px 8px 6px 20px;

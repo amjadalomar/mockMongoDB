@@ -13,12 +13,12 @@ tags.forEach(tag => {
 // return to view recipe page without making edits
 let backBtn = document.getElementById('backBtn');
 backBtn.addEventListener('click', function () {
-    window.location = 'viewRecipe.html';
+    window.location = 'homePage.html';
 });
 // return to view recipe page without making edits
-let cancelBtn = document.getElementById('cancelBtn');
-cancelBtn.addEventListener('click', function () {
-    window.location = 'viewRecipe.html';
+let confirmBtn = document.getElementById('confirmBtn');
+confirmBtn.addEventListener('click', function () {
+    window.location = 'viewPage.html';
 });
 
 let ingredientBtns = document.getElementById('ingredientBtns');
@@ -67,9 +67,4 @@ uploadImg.addEventListener('change', function () {
     if (img) {
         recipeImg.setAttribute('src', URL.createObjectURL(img));
     }
-});
-
-let deleteBtn = document.getElementById('deleteRecipeBtn');
-deleteBtn.addEventListener('click', function () {
-    window.location = 'homePage.html';
 });
