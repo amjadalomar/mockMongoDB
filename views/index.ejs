@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create</title>
+</head>
+
+<body>
+    <h1 data-position="header">May Node and Express be with you.</h1>
+
+    <section data-position="add-quote">
+      <h2>Add Recipe</h2>
+
+      <form action="/recipes" method="POST">
+        <input type="text" placeholder="title" name="title" /><br />
+        <input type="number" placeholder="servings" name="servings" /><br />
+        <input type="text" placeholder="author" name="author" /><br />
+        <input type="text" placeholder="cookingTime" name="cookingTime" /><br />
+        <input type="text" placeholder="ingredients" name="ingredients" /><br />
+        <input type="file" placeholder="choose image" name="image" /><br />
+        <button>Save</button>
+    </form>
+    </section>
+
+    <section data-position="update-recipe">
+      <div>
+        <h2>Update Recipe</h2>
+        <p>
+          Replace first Yoda's recipe with a recipe written by Darth Vadar
+        </p>
+        <button id="update-button">Replace Yoda's Recipe</button>
+      </div>
+    </section>
+
+    <section data-position="delete-recipe">
+      <div>
+        <h2>Remove Recipe</h2>
+        <p>
+          Delete one Darth Vadar's recipe. Does nothing if there are no more
+          Darth Vadar's recipes
+        </p>
+        <button id="delete-button">Delete Darth Vadar's Recipe</button>
+      </div>
+      <div id="message"></div>
+    </section>
+
+    <section data-position="recipes">
+      <h2>Recipes</h2>
+
+      <ul class="recipes">
+        <% for(var i = 0; i < recipes.length; i++) {%>
+        <li class="recipe">
+          <span><%= recipes[i].title %></span>:
+          <span><%= recipes[i].author %></span>
+        </li>
+        <% } %>
+      </ul>
+    </section>
+
+    <script src="/main.js"></script>
+  </body>
+</html>

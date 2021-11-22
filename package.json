@@ -18,7 +18,12 @@
   },
   "homepage": "https://github.com/amjadalomar/mockMongoDB#readme",
   "dependencies": {
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
     "mongodb": "^4.2.0",
     "spoonacular_api": "^1.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
   }
 }

@@ -1,32 +1,75 @@
-const http = require('http');
-const fs = require('fs');
-const { parse } = require('querystring');
+const express = require('express');
+const bodyParser= require('body-parser');
+const MongoClient = require('mongodb').MongoClient;
+const app = express();
+const uri = "mongodb+srv://first-user:2kS2Dr0nQTrLPkBW@mockdb.kbrxs.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 
-const crud = require('../crudmongo.js');
+MongoClient.connect(uri)
+.then(client => {
+  console.log('Connected to Database');
+  //const db = client.db("sample_airbnb");
+  const collection = client.db("sample_airbnb").collection("listingsAndReviews");
 
-const server = http.createServer((req, res) => {
-    if (req.method === 'POST') {
-        let body = '';
-      req.on('data', chunk => {
-          body += chunk.toString(); // convert Buffer to string
-      });
-      req.on('end', () => {
-          let recipe = parse(body);
-          console.log(recipe);
-          crud.createRecipe(recipe);
-          res.end('ok');
-      });
-    }
-    else {
-      fs.readFile('./nodelearn/demo.html', function(err, data) {
-        res.writeHead(200, {'Content-Type': 'text/html'});
-        res.write(data);
-        res.end();
-      });
-    }
-});
+  app.set('view engine', 'ejs');
+  app.use(bodyParser.urlencoded({ extended: true }));
+  app.use(bodyParser.json());
+  app.use(express.static('public'));
 
-server.listen(3000, '127.0.0.1', () => {
-  console.log(`Server running at http://127.0.0.1:3000/`);
-});
+  //READ kind of 
+  app.get('/', (req, res) => {
+    collection.find({author: {$in: ["Amjad", "Amjad Al-Omar", "Darth Vadar", "Yoda", "Darth Vader"]}}).toArray()
+    .then(results => {
+      res.render('index.ejs', { recipes: results });
+      console.log(results);
+    })
+    .catch(error => console.error(error));
+  });
+
+  //CREATE
+  app.post('/recipes', (req, res) => {
+    collection.insertOne(req.body)
+    .then(result => {
+      res.redirect('/');
+      console.log(`Inserted: ${req.body}`);
+    })
+    .catch(error => console.error(error));
+  });
+
+  //UPDATE
+  app.put('/recipes', (req, res) => {
+    collection.findOneAndUpdate(
+      { author: 'Yoda' },
+      {
+        $set: {
+          author: req.body.author,
+          title: req.body.title
+        }
+      },
+      {
+        upsert: true
+    })
+    .then(result => res.json('Success'))
+    .catch(error => console.error(error));
+  });
+
+  //DELETE
+  app.delete('/recipes', (req, res) => {
+      collection.deleteOne(
+        { author: req.body.author }
+      )
+        .then(result => {
+          if (result.deletedCount === 0) {
+            return res.json('No quote to delete')
+          }
+          res.json('Deleted Darth Vadar\'s quote')
+        })
+        .catch(error => console.error(error))
+    })
+
+  app.listen(3000, function() {
+    console.log('listening on 3000')
+  });
+
+})
+.catch(error => console.error(error));
 
