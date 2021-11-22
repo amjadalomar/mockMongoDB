@@ -1,0 +1,13 @@
+{
+    "Burger" : "../assets/images/sample-recipes/burger.jpg",
+    "French Toast" : "../assets/images/sample-recipes/french-toast.jpg",
+    "Fried Ice Cream" : "../assets/images/sample-recipes/fried-ice-cream.jpg",
+    "Fries" : "../assets/images/sample-recipes/fries.jpg",
+    "Hot Coacoa" : "../assets/images/sample-recipes/hot-coacoa.jpg",
+    "Mochi" : "../assets/images/sample-recipes/mochi.jpg",
+    "Pizza" : "../assets/images/sample-recipes/pizza.jpg",
+    "Quesadilla" : "../assets/images/sample-recipes/quesa.jpg",
+    "Ravioli" : "../assets/images/sample-recipes/ravioli.jpg",
+    "Sushi" : "../assets/images/sample-recipes/sushi.jpg",
+    "Sweet Rice" : "../assets/images/sample-recipes/sweet-rice.jpg"
+}

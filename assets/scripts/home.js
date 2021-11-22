@@ -1,20 +1,35 @@
 window.addEventListener('DOMContentLoaded', init);
 
-function init() {
-    const recipes = [
-        '../assets/images/sample-recipes/burger.jpg',
-        '../assets/images/sample-recipes/french-toast.jpg',
-        '../assets/images/sample-recipes/fried-ice-cream.jpg',
-        '../assets/images/sample-recipes/fries.jpg',
-        '../assets/images/sample-recipes/hot-coacoa.jpg',
-        '../assets/images/sample-recipes/mochi.jpg',
-        '../assets/images/sample-recipes/pizza.jpg',
-        '../assets/images/sample-recipes/quesa.jpg',
-        '../assets/images/sample-recipes/ravioli.jpg',
-        '../assets/images/sample-recipes/sushi.jpg',
-        '../assets/images/sample-recipes/sweet-rice.jpg',
-        '../assets/images/sample-recipes/Ice-Cream-Sundae.jpg'
-    ]
+async function init() {
+    // Create Recipes (took some code from Lab 5)
+    const recipes = [];
+    var dataBank;
+
+    async function fetchRecipes() {
+        return new Promise((resolve, reject) => {  
+            let json = (window.location['pathname'] == "/views/explorePage.html") ? "../assets/dataDel.json" : "../assets/data.json";
+            fetch(json)
+                .then(response => response.json())
+                .then(data => {
+                    let ind = 0;
+                    for(let recipe in data) {
+                        recipes[ind] = data[recipe];
+                        ind++;
+                    }
+                    console.log(data);
+                    resolve(true);
+                })
+                .catch(error => reject(false));
+        });
+    }
+
+    let fetchSuccessful = await fetchRecipes();
+
+    if (!fetchSuccessful) {
+        console.log('Recipe fetch unsuccessful');
+        return;
+    };
+
     const recipeGrid = document.querySelector('.recipe-grid');
     const recipeElements = document.querySelectorAll('.recipe');
     const recipeWH = '170vw';

@@ -70,8 +70,34 @@ uploadImg.addEventListener('change', function () {
 });
 
 let deleteBtn = document.getElementById('deleteRecipeBtn');
-deleteBtn.addEventListener('click', function () {
-    window.location = 'homePage.html';
-});
+deleteBtn.addEventListener('click', deleteRecipe);
+
+async function deleteRecipe() {
+    const recipes = [];
+    var dataBank;
+
+    async function fetchRecipes() {
+        return new Promise((resolve, reject) => {      
+            fetch("../assets/data.json")
+                .then(response => response.json())
+                .then(data => {
+                    let ind = 0;
+                    delete data['Ice Cream Sundae'];
+                    console.log(data);
+                    resolve(true);
+                })
+                .catch(error => reject(false));
+        });
+    }
+
+    let fetchSuccessful = await fetchRecipes();
+
+    if (!fetchSuccessful) {
+        console.log('Recipe fetch unsuccessful');
+        return;
+    };
+
+    window.location = 'explorePage.html';
+}
 
 //on click of delete button, remove ice cream image from fetch data in home.js
