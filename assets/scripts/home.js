@@ -80,6 +80,6 @@ function init() {
 }
 
 const createButton = document.getElementById('createButton');
-    createButton.addEventListener('click', function () {
-        window.location('createRecipe.html');
+    createButton.addEventListener('click', function() {
+        window.location = 'createRecipe.html';
 })

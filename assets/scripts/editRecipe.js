@@ -73,3 +73,5 @@ let deleteBtn = document.getElementById('deleteRecipeBtn');
 deleteBtn.addEventListener('click', function () {
     window.location = 'homePage.html';
 });
+
+//on click of delete button, remove ice cream image from fetch data in home.js

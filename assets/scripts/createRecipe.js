@@ -18,7 +18,7 @@ backBtn.addEventListener('click', function () {
 // return to view recipe page without making edits
 let confirmBtn = document.getElementById('confirmBtn');
 confirmBtn.addEventListener('click', function () {
-    window.location = 'viewPage.html';
+    window.location = 'viewRecipe.html';
 });
 
 let ingredientBtns = document.getElementById('ingredientBtns');
