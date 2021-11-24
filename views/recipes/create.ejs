@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Recipe</title>
+    <link rel='stylesheet' href='../assets/styles/createRecipe.css'>
+    <script src='../assets/scripts/createRecipe.js' type="module"></script>
+</head>
+<body>
+    <h1>Create</h1>
+    <form action='/recipes' method="POST">
+            <nav id='navbarGrid'>
+                <img id='backBtn' src='../assets/images/backArrow.png'>
+                <img id='logo' src='../assets/images/logo.png'>
+                <input type='image' id='confirmBtn' src='../assets/images/confirm.png'>
+            </nav>
+            
+            <div role='textbox' contenteditable id='title'>
+                
+            </div>
+            <!-- <textarea id='title'>Ice cream double sundae chocolate surprise with a shot of espresso</textarea> -->
+
+            <div id='metaData'>
+                <!-- Limit input servings to 3 digits (999 people), cookTime to 4 digits (9,999 minutes), make size of input box just longer than max input length -->
+                <p><b>Servings:</b> <br><span><input type='text' id='servings' size='2' maxlength='2'></span> &nbsp;</p>
+                <p><b>Cooking Time:</b> <br><span><input type='text' id='cookTime' size='4' maxlength='4'></span> minutes &nbsp;</p>
+                <!-- <p><b>Author:</b> <br><span><input type='text' id='author' size='10'></span></p> -->
+                <p><b>Author:</b> <br><input type='text' id='author' size='20' maxlength='20'></span></p>
+            </div>
+
+            <div class='tags'>
+                <p>Breakfast</p>
+                <p>Lunch</p>
+                <p>Dinner</p>
+                <p>Dessert</p>
+                <p>Healthy</p>
+                <p>Sugar Free</p>
+                <p>Vegetarian</p>
+                <p>Vegan</p>
+                <p>Cheap!</p>
+                <p>Under 10 Mins</p>
+                <p>Beginner</p>
+                <p>Intermediate</p>
+                <p>Advanced</p>
+            </div>
+
+            <div id='recipeCardGrid'>
+                <article id='imageEdit'>
+                    <img id='recipeImg' src=''>
+                    <input type='file' id='uploadImg' value='UPLOAD IMAGE'>
+                </article>
+
+                <article id='ingredients'>
+                    <h2>Ingredients</h2>
+
+                    <div role='textbox' contenteditable id='ingredient1'>
+                        Ingredient 1
+                    </div>
+
+                    <div id='ingredientBtns'>
+                        <input type='button' id='addIngredient' value='+'>
+                        <input type='button' id='removeIngredient' value='-'>
+                    </div>
+                </article>
+
+                <article id='instructions'>
+                    <h2>Instructions</h2>
+
+                    <div role='textbox' contenteditable id='instruction1'>
+                        Instruction 1
+                    </div>
+                    
+                    <div id='instructionBtns'>
+                        <input type='button' id='addInstruction' value='+'>
+                        <input type='button' id='removeInstruction' value='-'>
+                    </div>
+                </article>
+
+            </div>
+        </form>
+</body>
+</html>
